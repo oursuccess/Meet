@@ -10,7 +10,6 @@ public class Door : Ground
         if (!DoorOpened)
         {
             var KeyTransform = element.gameObject.transform.Find("Key");
-            Debug.Log(KeyTransform);
             if (KeyTransform != null)
             {
                 DoorOpen();
@@ -23,6 +22,5 @@ public class Door : Ground
     private void DoorOpen()
     {
         DoorOpened = true;
-        Debug.Log("DoorOpened");
     }
 }
