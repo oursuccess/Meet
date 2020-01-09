@@ -10,6 +10,8 @@ public class BoardManager : MonoBehaviour
     public const string FloorScript = "FLOOR";
     public const string ExitScript = "EXIT";
     public const string BoxScript = "BOX";
+    public const string KeyScript = "KEY";
+    public const string DoorScript = "DOOR";
     public const string NormalCharacterScript = "NORMALCHARACTER";
     public const string HorizontalCharacterScript = "HORIZONTALCHARACTER";
     public const string VerticalCharacterScript = "VERTICALCHARACTER";
@@ -19,22 +21,26 @@ public class BoardManager : MonoBehaviour
     private GameObject WallPrefab;
     private GameObject FloorPrefab;
     private GameObject ExitPrefab;
-    private GameObject NormalCharacterPrefab;
     private GameObject BoxPrefab;
-    private GameObject GridPrefab;
+    private GameObject KeyPrefab;
+    private GameObject DoorPrefab;
+    private GameObject NormalCharacterPrefab;
     private GameObject HorizontalCharacterPrefab;
     private GameObject VerticalCharacterPrefab;
+    private GameObject GridPrefab;
     private void InitPrefabs()
     {
         string PrefabPath = "Prefabs";
         WallPrefab = Resources.Load<GameObject>(PrefabPath + "/Wall");
         FloorPrefab = Resources.Load<GameObject>(PrefabPath + "/Floor");
         ExitPrefab = Resources.Load<GameObject>(PrefabPath + "/Exit");
-        NormalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/NormalCharacter");
         BoxPrefab = Resources.Load<GameObject>(PrefabPath + "/Box");
-        GridPrefab = Resources.Load<GameObject>(PrefabPath + "/Grid");
+        KeyPrefab = Resources.Load<GameObject>(PrefabPath + "/Key");
+        DoorPrefab = Resources.Load<GameObject>(PrefabPath + "/Door");
+        NormalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/NormalCharacter");
         HorizontalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/HorizontalCharacter");
         VerticalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/VerticalCharacter");
+        GridPrefab = Resources.Load<GameObject>(PrefabPath + "/Grid");
     }
  #endregion
     #region GridsNElements
@@ -61,7 +67,7 @@ public class BoardManager : MonoBehaviour
         Grids = new List<List<Grid>>();
         Characters = new List<Character>();
     }
-    private void RemoveElement(Element element)
+    public void RemoveElement(Element element)
     {
         Grids[element.PositionInGrid.y][element.PositionInGrid.x].Element = null;
         Destroy(element.gameObject);
@@ -96,9 +102,34 @@ public class BoardManager : MonoBehaviour
                         GameObject GroundPrefab = null;
                         switch (Scripts[y][x])
                         {
+                            case FloorScript:
+                                {
+                                    GroundPrefab = FloorPrefab;
+                                }
+                                break;
+                            case ExitScript:
+                                {
+                                    GroundPrefab = ExitPrefab;
+                                }
+                                break;
+                            case WallScript:
+                                {
+                                    GroundPrefab = WallPrefab;
+                                }
+                                break;
                             case BoxScript:
                                 {
                                     ElementPrefab = BoxPrefab;
+                                }
+                                break;
+                            case KeyScript:
+                                {
+                                    ElementPrefab = KeyPrefab;
+                                }
+                                break;
+                            case DoorScript:
+                                {
+                                    GroundPrefab = DoorPrefab;
                                 }
                                 break;
                             case NormalCharacterScript:
@@ -114,21 +145,6 @@ public class BoardManager : MonoBehaviour
                             case VerticalCharacterScript:
                                 {
                                     ElementPrefab = VerticalCharacterPrefab;
-                                }
-                                break;
-                            case FloorScript:
-                                {
-                                    GroundPrefab = FloorPrefab;
-                                }
-                                break;
-                            case ExitScript:
-                                {
-                                    GroundPrefab = ExitPrefab;
-                                }
-                                break;
-                            case WallScript:
-                                {
-                                    GroundPrefab = WallPrefab;
                                 }
                                 break;
                         }

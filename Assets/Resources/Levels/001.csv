@@ -1,7 +1,7 @@
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
 Wall,,,,Wall,,,Wall
 Wall,,,HorizontalCharacter,,,,Wall
-Wall,,NormalCharacter,,,,Exit,Wall
-Wall,,,,Box,,,Wall
+Wall,,NormalCharacter,,Door,,Exit,Wall
+Wall,Key,,,Box,,,Wall
 Wall,,,,VerticalCharacter,,,Wall
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
