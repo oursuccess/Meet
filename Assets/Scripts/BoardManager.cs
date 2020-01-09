@@ -11,8 +11,8 @@ public class BoardManager : MonoBehaviour
     public const string ExitScript = "EXIT";
     public const string BoxScript = "BOX";
     public const string CharacterScript = "CHARACTER";
-    public const string HorizontalCharacterScript = "HORIZONTAL";
-    public const string VerticalCharacterScript = "VERTICAL";
+    public const string HorizontalCharacterScript = "HORIZONTAL" + CharacterScript;
+    public const string VerticalCharacterScript = "VERTICAL" + CharacterScript;
     public const string NoGrid = "NOGRID";
     #endregion
     #region Prefab
@@ -22,14 +22,8 @@ public class BoardManager : MonoBehaviour
     private GameObject CharacterPrefab;
     private GameObject BoxPrefab;
     private GameObject GridPrefab;
-    #endregion
-    #region GridsNElements
-    public List<List<Grid>> Grids { get; private set; }
-    #endregion
-    void Start()
-    {
-        InitPrefabs();
-    }
+    private GameObject HorizontalCharacterPrefab;
+    private GameObject VerticalCharacterPrefab;
     private void InitPrefabs()
     {
         string PrefabPath = "Prefabs";
@@ -39,6 +33,17 @@ public class BoardManager : MonoBehaviour
         CharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/Character");
         BoxPrefab = Resources.Load<GameObject>(PrefabPath + "/Box");
         GridPrefab = Resources.Load<GameObject>(PrefabPath + "/Grid");
+        HorizontalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/HorizontalCharacter");
+        VerticalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/VerticalCharacter");
+    }
+ #endregion
+    #region GridsNElements
+    public List<List<Grid>> Grids { get; private set; }
+    private List<CharacterBase> Characters;
+    #endregion
+    void Start()
+    {
+        InitPrefabs();
     }
     private void InitPrevBoard()
     {
@@ -48,12 +53,18 @@ public class BoardManager : MonoBehaviour
             {
                 foreach(var Grid in GridRow)
                 {
-                    if (Grid.Element != null) Destroy(Grid.Element.gameObject);
+                    if (Grid.Element != null) RemoveElement(Grid.Element);
                     Destroy(Grid.gameObject);
                 }
             }
         }
         Grids = new List<List<Grid>>();
+        Characters = new List<CharacterBase>();
+    }
+    private void RemoveElement(Element element)
+    {
+        Grids[element.PositionInGrid.y][element.PositionInGrid.x].Element = null;
+        Destroy(element.gameObject);
     }
     public void CreateBoardOfLevel(int levelNo)
     {
@@ -95,6 +106,16 @@ public class BoardManager : MonoBehaviour
                                     ElementPrefab = CharacterPrefab;
                                 }
                                 break;
+                            case HorizontalCharacterScript:
+                                {
+                                    ElementPrefab = HorizontalCharacterPrefab;
+                                }
+                                break;
+                            case VerticalCharacterScript:
+                                {
+                                    ElementPrefab = VerticalCharacterPrefab;
+                                }
+                                break;
                             case FloorScript:
                                 {
                                     GroundPrefab = FloorPrefab;
@@ -124,6 +145,11 @@ public class BoardManager : MonoBehaviour
                             Element.Board = this;
                             Element.SetPosition(new Element.Position(x, y));
                             Grid.Element = Element;
+
+                            if(Element is CharacterBase character)
+                            {
+                                Characters.Add(character);
+                            }
                         }
                     }
                 }
@@ -132,7 +158,6 @@ public class BoardManager : MonoBehaviour
             Grids.Add(new List<Grid>(GridCol));
         }
     }
-
     public bool CanMoveTo(Element element, int xChange, int yChange)
     {
         bool CanMove = false;
@@ -151,5 +176,14 @@ public class BoardManager : MonoBehaviour
             }
         }
         return CanMove;
+    }
+    public void CharacterApproachExit(CharacterBase character)
+    {
+        Characters.Remove(character);
+        RemoveElement(character);
+        if (Characters.Count == 0)
+        {
+            GameManager.Instance.ChangeState(GameManager.gameState.LevelAccomplish);
+        }
     }
 }

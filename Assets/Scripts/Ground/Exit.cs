@@ -12,11 +12,10 @@ public class Exit : Ground
     {
         if(element.Type == Element.ElementType.Character)
         {
-            if(element is Character character)
+            if(element is CharacterBase character)
             {
                 character.ApproachExit();
             }
-            //GameManager.Instance.ChangeState(GameManager.gameState.LevelAccomplish);
         }
         return true;
     }
