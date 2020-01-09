@@ -10,16 +10,16 @@ public class BoardManager : MonoBehaviour
     public const string FloorScript = "FLOOR";
     public const string ExitScript = "EXIT";
     public const string BoxScript = "BOX";
-    public const string CharacterScript = "CHARACTER";
-    public const string HorizontalCharacterScript = "HORIZONTAL" + CharacterScript;
-    public const string VerticalCharacterScript = "VERTICAL" + CharacterScript;
+    public const string NormalCharacterScript = "NORMALCHARACTER";
+    public const string HorizontalCharacterScript = "HORIZONTALCHARACTER";
+    public const string VerticalCharacterScript = "VERTICALCHARACTER";
     public const string NoGrid = "NOGRID";
     #endregion
     #region Prefab
     private GameObject WallPrefab;
     private GameObject FloorPrefab;
     private GameObject ExitPrefab;
-    private GameObject CharacterPrefab;
+    private GameObject NormalCharacterPrefab;
     private GameObject BoxPrefab;
     private GameObject GridPrefab;
     private GameObject HorizontalCharacterPrefab;
@@ -30,7 +30,7 @@ public class BoardManager : MonoBehaviour
         WallPrefab = Resources.Load<GameObject>(PrefabPath + "/Wall");
         FloorPrefab = Resources.Load<GameObject>(PrefabPath + "/Floor");
         ExitPrefab = Resources.Load<GameObject>(PrefabPath + "/Exit");
-        CharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/Character");
+        NormalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/NormalCharacter");
         BoxPrefab = Resources.Load<GameObject>(PrefabPath + "/Box");
         GridPrefab = Resources.Load<GameObject>(PrefabPath + "/Grid");
         HorizontalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/HorizontalCharacter");
@@ -39,7 +39,7 @@ public class BoardManager : MonoBehaviour
  #endregion
     #region GridsNElements
     public List<List<Grid>> Grids { get; private set; }
-    private List<CharacterBase> Characters;
+    private List<Character> Characters;
     #endregion
     void Start()
     {
@@ -59,7 +59,7 @@ public class BoardManager : MonoBehaviour
             }
         }
         Grids = new List<List<Grid>>();
-        Characters = new List<CharacterBase>();
+        Characters = new List<Character>();
     }
     private void RemoveElement(Element element)
     {
@@ -101,9 +101,9 @@ public class BoardManager : MonoBehaviour
                                     ElementPrefab = BoxPrefab;
                                 }
                                 break;
-                            case CharacterScript:
+                            case NormalCharacterScript:
                                 {
-                                    ElementPrefab = CharacterPrefab;
+                                    ElementPrefab = NormalCharacterPrefab;
                                 }
                                 break;
                             case HorizontalCharacterScript:
@@ -146,7 +146,7 @@ public class BoardManager : MonoBehaviour
                             Element.SetPosition(new Element.Position(x, y));
                             Grid.Element = Element;
 
-                            if(Element is CharacterBase character)
+                            if(Element is Character character)
                             {
                                 Characters.Add(character);
                             }
@@ -177,7 +177,7 @@ public class BoardManager : MonoBehaviour
         }
         return CanMove;
     }
-    public void CharacterApproachExit(CharacterBase character)
+    public void CharacterApproachExit(Character character)
     {
         Characters.Remove(character);
         RemoveElement(character);

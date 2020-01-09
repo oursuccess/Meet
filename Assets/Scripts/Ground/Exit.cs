@@ -12,7 +12,7 @@ public class Exit : Ground
     {
         if(element.Type == Element.ElementType.Character)
         {
-            if(element is CharacterBase character)
+            if(element is Character character)
             {
                 character.ApproachExit();
             }

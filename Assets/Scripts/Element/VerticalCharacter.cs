@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VerticalCharacter : CharacterBase
+public class VerticalCharacter : Character
 {
     protected override bool IfGetInput()
     {
