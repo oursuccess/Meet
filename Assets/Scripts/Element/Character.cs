@@ -12,13 +12,20 @@ public abstract class Character : Element
 
         GameManager.Instance.OnLevelAccomplish += DisableInput;
     }
-    private void DisableInput()
+    public void DisableInput()
     {
         canGetInput = false;
     }
+    public void EnableInput()
+    {
+        canGetInput = true;
+    }
     protected void Move(int Horizontal, int Vertical)
     {
-        CanMoveTo(new Position(Horizontal, Vertical));
+        if(CanMoveTo(new Position(Horizontal, Vertical)))
+        {
+            MoveTo(new Position(Horizontal, Vertical));
+        }
     }
     void Update()
     {
@@ -37,7 +44,12 @@ public abstract class Character : Element
     protected abstract bool IfGetInput();
     public override bool ThingCanMoveToMe(Element element, Position direction)
     {
-        bool CanMove = CanMoveTo(direction);
+        bool CanMove = false;
+        if (CanMoveTo(direction))
+        {
+            MoveTo(direction);
+            CanMove = true;
+        }
         return CanMove;
     }
     public void ApproachExit()

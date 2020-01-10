@@ -10,6 +10,12 @@ public class Box : Element
     }
     public override bool ThingCanMoveToMe(Element element, Position direction)
     {
-        return CanMoveTo(direction);
+        bool CanMove = false;
+        if (CanMoveTo(direction))
+        {
+            MoveTo(direction);
+            CanMove = true;
+        }
+        return CanMove;
     }
 }

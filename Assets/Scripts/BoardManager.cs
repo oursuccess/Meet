@@ -15,6 +15,7 @@ public class BoardManager : MonoBehaviour
     public const string NormalCharacterScript = "NORMALCHARACTER";
     public const string HorizontalCharacterScript = "HORIZONTALCHARACTER";
     public const string VerticalCharacterScript = "VERTICALCHARACTER";
+    public const string ChainCharacterScript = "CHAINCHARACTER";
     public const string NoGrid = "NOGRID";
     #endregion
     #region Prefab
@@ -27,6 +28,7 @@ public class BoardManager : MonoBehaviour
     private GameObject NormalCharacterPrefab;
     private GameObject HorizontalCharacterPrefab;
     private GameObject VerticalCharacterPrefab;
+    private GameObject ChainCharacterPrefab;
     private GameObject GridPrefab;
     private void InitPrefabs()
     {
@@ -40,6 +42,7 @@ public class BoardManager : MonoBehaviour
         NormalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/NormalCharacter");
         HorizontalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/HorizontalCharacter");
         VerticalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/VerticalCharacter");
+        ChainCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/ChainCharacter");
         GridPrefab = Resources.Load<GameObject>(PrefabPath + "/Grid");
     }
  #endregion
@@ -185,13 +188,18 @@ public class BoardManager : MonoBehaviour
             var groundInTargetGrid = Grids[yTarget][xTarget].Ground;
             if ((elementInTargetGrid == null || elementInTargetGrid.ThingCanMoveToMe(element, new Element.Position(xChange, yChange))) && (groundInTargetGrid == null || groundInTargetGrid.ThingCanMoveToMe(element)))
             {
-                Grids[yTarget][xTarget].Element = element;
-                Grids[yBase][xBase].Element = null;
-                element.SetPosition(new Element.Position(xTarget, yTarget));
                 CanMove = true;
             }
         }
         return CanMove;
+    }
+    public void ElementMoveTo(Element element, int xChange , int yChange)
+    {
+        int yBase = element.PositionInGrid.y, yTarget = yBase - yChange;
+        int xBase = element.PositionInGrid.x, xTarget = xBase + xChange;
+        Grids[yTarget][xTarget].Element = element;
+        Grids[yBase][xBase].Element = null;
+        element.SetPosition(new Element.Position(xTarget, yTarget));
     }
     public void CharacterApproachExit(Character character)
     {
@@ -201,5 +209,17 @@ public class BoardManager : MonoBehaviour
         {
             GameManager.Instance.ChangeState(GameManager.gameState.LevelAccomplish);
         }
+    }
+    public Element GetElementOfPosition(int xPos, int yPos)
+    {
+        Element element = null;
+        if(yPos < 0 || yPos >= Grids.Count || xPos < 0 || xPos >= Grids[yPos].Count || Grids[yPos][xPos] == null)
+        {
+        }
+        else
+        {
+            element = Grids[yPos][xPos].Element;
+        }
+        return element;
     }
 }

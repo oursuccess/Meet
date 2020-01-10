@@ -21,6 +21,7 @@ public class Door : Ground
     }
     private void DoorOpen()
     {
+        gameObject.SetActive(false);
         DoorOpened = true;
     }
 }

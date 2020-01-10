@@ -26,17 +26,16 @@ public abstract class Element : MonoBehaviour
     }
     public bool CanMoveTo(Position direction)
     {
-        if(Board.CanMoveTo(this, direction.x, direction.y))
-        {
-            transform.position += new Vector3(direction.x, direction.y);
-            return true;
-        }
-        return false;
+        return Board.CanMoveTo(this, direction.x, direction.y);
+    }
+    public void MoveTo(Position direction)
+    {
+        Board.ElementMoveTo(this, direction.x, direction.y);
+        transform.position += new Vector3(direction.x, direction.y);
     }
     public virtual bool ThingCanMoveToMe(Element element, Position direction)
     {
-        bool CanMove = false;
-        return CanMove;
+        return false;
     }
     #endregion
     #region Grid
