@@ -41,13 +41,20 @@ public class GameManager : MonoBehaviour
     public void LoadLevel(int levelNo)
     {
         LevelManager.LoadLevel(levelNo);
+        ChangeState(gameState.LevelStart);
     }
-    public delegate void LevelAccomplishDel();
-    public event LevelAccomplishDel OnLevelAccomplish;
+    public void ResetLevel()
+    {
+        LevelManager.ResetLevel();
+    }
+    public delegate void StateChangeDel();
+    public event StateChangeDel OnLevelAccomplish;
+    public event StateChangeDel OnLevelStart;
     #endregion
     #region GameState
     public enum gameState
     {
+        LevelStart,
         InLevel,
         LevelAccomplish,
     }
@@ -57,6 +64,11 @@ public class GameManager : MonoBehaviour
         GameState = gameState;
         switch (GameState)
         {
+            case gameState.LevelStart:
+                {
+                    OnLevelStart?.Invoke();
+                }
+                break;
             case gameState.LevelAccomplish:
                 {
                     OnLevelAccomplish?.Invoke();

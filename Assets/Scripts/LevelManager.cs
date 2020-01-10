@@ -17,4 +17,8 @@ public class LevelManager : MonoBehaviour
         Level = levelNo;
         BoardManager.CreateBoardOfLevel(levelNo);
     }
+    public void ResetLevel()
+    {
+        BoardManager.CreateBoardOfLevel(Level);
+    }
 }

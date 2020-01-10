@@ -55,7 +55,7 @@ public abstract class Character : Element
     {
         MoveTo(direction);
     }
-    public void ApproachExit()
+    public virtual void ApproachExit()
     {
         Board.CharacterApproachExit(this);
     }

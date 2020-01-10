@@ -24,6 +24,8 @@ public abstract class Element : MonoBehaviour
     {
         PositionInGrid = position;
     }
+    #endregion
+    #region MoveTo
     public bool CanMoveTo(Position direction)
     {
         return Board.CanMoveTo(this, direction.x, direction.y);
@@ -41,5 +43,19 @@ public abstract class Element : MonoBehaviour
     #endregion
     #region Grid
     public BoardManager Board;
+    #endregion
+    #region Chain
+    public bool IsChained { get; protected set; } = false;
+    public ChainChracter ChainedCharacter { get; protected set; } = null;
+    public void ChainTo(ChainChracter chainChracter)
+    {
+        IsChained = true;
+        ChainedCharacter = chainChracter;
+    }
+    public void UnChain()
+    {
+        IsChained = false;
+        ChainedCharacter = null;
+    }
     #endregion
 }

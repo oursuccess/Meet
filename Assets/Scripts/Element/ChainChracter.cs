@@ -120,11 +120,11 @@ public class ChainChracter : Character
         if (!ChainedElements.Contains(element))
         {
             ChainedElements.Add(element);
+            element.ChainTo(this);
             if (element is Character character)
             {
                 if (element != this)
                 {
-                    Debug.Log(element);
                     character.DisableInput();
                 }
                 if (character is NormalCharacter normalCharacter)
@@ -145,10 +145,10 @@ public class ChainChracter : Character
     }
     private void UnchainClosedElements()
     {
-        Debug.Log("unchain");
         foreach(var element in ChainedElements)
         {
-            if(element is Character character && character != this)
+            element.UnChain();
+            if(element is Character character && element!= this)
             {
                 character.EnableInput();
             }
@@ -156,5 +156,26 @@ public class ChainChracter : Character
         ChainedElements.Clear();
         CanGetHorizontalInput = false;
         CanGetVerticalInput = false;
+    }
+
+    public override void ApproachExit()
+    {
+        if(ChainedElements != null || ChainedElements.Count != 0)
+        {
+            foreach(var element in ChainedElements)
+            {
+                if(element != this && element is Character character)
+                {
+                    character.UnChain();
+                    character.ApproachExit();
+                }
+                else
+                {
+                    element.UnChain();
+                    Destroy(element.gameObject);
+                }
+            }
+        }
+        base.ApproachExit();
     }
 }

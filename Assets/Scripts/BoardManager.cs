@@ -63,6 +63,11 @@ public class BoardManager : MonoBehaviour
                 foreach(var Grid in GridRow)
                 {
                     if (Grid.Element != null) RemoveElement(Grid.Element);
+                    if (Grid.Ground != null)
+                    {
+                        Destroy(Grid.Ground.gameObject);
+                        Grid.Ground = null;
+                    }
                     Destroy(Grid.gameObject);
                 }
             }
@@ -210,8 +215,15 @@ public class BoardManager : MonoBehaviour
     }
     public void CharacterApproachExit(Character character)
     {
-        Characters.Remove(character);
-        RemoveElement(character);
+        if (character.IsChained)
+        {
+            character.ChainedCharacter.ApproachExit();
+        }
+        else
+        {
+            Characters.Remove(character);
+            RemoveElement(character);
+        }
         if (Characters.Count == 0)
         {
             GameManager.Instance.ChangeState(GameManager.gameState.LevelAccomplish);

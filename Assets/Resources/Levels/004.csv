@@ -1,0 +1,8 @@
+,,Wall,Wall,Wall,Wall,Wall,
+,Wall,Wall,VerticalCharacter,Wall,Exit,Wall,
+Wall,Wall,,BOX,Wall,,Wall,
+Wall,,,,Wall,,Wall,Wall
+Wall,,,,,BOX,HorizontalCharacter,Wall
+Wall,,,,,,,Wall
+Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
+,,Wall,Wall,,,,
