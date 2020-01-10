@@ -20,7 +20,7 @@ public abstract class Character : Element
     {
         canGetInput = true;
     }
-    protected void Move(int Horizontal, int Vertical)
+    protected virtual void Move(int Horizontal, int Vertical)
     {
         if(CanMoveTo(new Position(Horizontal, Vertical)))
         {
@@ -47,10 +47,13 @@ public abstract class Character : Element
         bool CanMove = false;
         if (CanMoveTo(direction))
         {
-            MoveTo(direction);
             CanMove = true;
         }
         return CanMove;
+    }
+    public override void ThingMoveToMe(Element element, Position direction)
+    {
+        MoveTo(direction);
     }
     public void ApproachExit()
     {

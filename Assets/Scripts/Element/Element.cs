@@ -37,6 +37,7 @@ public abstract class Element : MonoBehaviour
     {
         return false;
     }
+    public abstract void ThingMoveToMe(Element element, Position direction);
     #endregion
     #region Grid
     public BoardManager Board;

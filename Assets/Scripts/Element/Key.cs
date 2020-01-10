@@ -8,12 +8,17 @@ public class Key : Element
     {
         if(element is Character character)
         {
-            ThingHoldMe(character);
             return true;
         }
         return false;
     }
-
+    public override void ThingMoveToMe(Element element, Position direction)
+    {
+        if(element is Character character)
+        {
+            ThingHoldMe(character);
+        }
+    }
     private void ThingHoldMe(Character character)
     {
         var KeyObject = new GameObject("Key");

@@ -13,9 +13,13 @@ public class Box : Element
         bool CanMove = false;
         if (CanMoveTo(direction))
         {
-            MoveTo(direction);
             CanMove = true;
         }
         return CanMove;
+    }
+
+    public override void ThingMoveToMe(Element element, Position direction)
+    {
+        MoveTo(direction);
     }
 }

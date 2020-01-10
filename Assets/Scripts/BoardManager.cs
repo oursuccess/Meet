@@ -150,6 +150,11 @@ public class BoardManager : MonoBehaviour
                                     ElementPrefab = VerticalCharacterPrefab;
                                 }
                                 break;
+                            case ChainCharacterScript:
+                                {
+                                    ElementPrefab = ChainCharacterPrefab;
+                                }
+                                break;
                         }
                         if(GroundPrefab != null)
                         {
@@ -197,6 +202,8 @@ public class BoardManager : MonoBehaviour
     {
         int yBase = element.PositionInGrid.y, yTarget = yBase - yChange;
         int xBase = element.PositionInGrid.x, xTarget = xBase + xChange;
+        var nextElement = Grids[yTarget][xTarget].Element;
+        if(nextElement != null) nextElement.ThingMoveToMe(element, new Element.Position(xChange, yChange));
         Grids[yTarget][xTarget].Element = element;
         Grids[yBase][xBase].Element = null;
         element.SetPosition(new Element.Position(xTarget, yTarget));
