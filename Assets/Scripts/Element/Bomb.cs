@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bomb : Element
 {
     private Character character;
-    private int BombSteps = 3;
+    private int BombSteps = 1;
     private int CurrSteps = 0;
     void Start()
     {
@@ -18,14 +18,19 @@ public class Bomb : Element
     }
     public override void ThingMoveToMe(Element element, Position direction)
     {
+        MoveTo(direction);
         if(element is Character character)
         {
-            if(this.character != character)
+            if (this.character == null) this.character = character;
+            if (this.character != character)
             {
-                this.character = character;
                 this.character.OnMoving -= WaitToActivate;
+                this.character = character;
             }
-            this.character.OnMoving += WaitToActivate;
+            if (this.character != null)
+            {
+                this.character.OnMoving += WaitToActivate;
+            }
         }
     }
     private void WaitToActivate(Element element)

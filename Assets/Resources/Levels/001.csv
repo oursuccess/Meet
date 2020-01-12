@@ -1,7 +1,7 @@
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
 Wall,,,,,,,Wall
-Wall,,,HorizontalCharacter,CharacterDirectionSwitch,,,Wall
-Wall,,,,,,Exit,Wall
+Wall,,,HorizontalCharacter,Bomb,Box,,Wall
+Wall,,,,,Box,Exit,Wall
 Wall,,,,,,,Wall
 Wall,,,,VerticalCharacter,,,Wall
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
