@@ -1,7 +1,7 @@
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
-Wall,ElecSwitch,,,,,,Wall
-Wall,,ElecSwitch,,ElecDoor:B2+B5,,,Wall
-Wall,,,,,,Exit,Wall
-Wall,ElecSwitch,,NormalCharacter,,,,Wall
+Wall,ElecSpring,,,,,,Wall
+Wall,,ElecSpring,,ElecDoor:B2+B5,,,Wall
+Wall,,Box,,Box,,Exit,Wall
+Wall,ElecSpring,,NormalCharacter,,,,Wall
 Wall,,,,,,,Wall
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall

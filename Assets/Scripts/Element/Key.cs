@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Key : Element
 {
-    public override bool ThingCanMoveToMe(Element element, Position direction)
+    public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         if(element is Character character)
         {
@@ -12,7 +12,7 @@ public class Key : Element
         }
         return false;
     }
-    public override void ThingMoveToMe(Element element, Position direction)
+    public override void ThingMoveToMe(Element element, PositionInGrid direction)
     {
         if(element is Character character)
         {

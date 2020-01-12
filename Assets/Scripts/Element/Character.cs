@@ -26,9 +26,9 @@ public abstract class Character : Element
     }
     protected virtual void Move(int Horizontal, int Vertical)
     {
-        if(CanMoveTo(new Position(Horizontal, Vertical)))
+        if(CanMoveTo(new PositionInGrid(Horizontal, Vertical)))
         {
-            MoveTo(new Position(Horizontal, Vertical));
+            MoveTo(new PositionInGrid(Horizontal, Vertical));
         }
     }
     void Update()
@@ -68,7 +68,7 @@ public abstract class Character : Element
         }
         return GetInput;
     }
-    public override bool ThingCanMoveToMe(Element element, Position direction)
+    public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         bool CanMove = false;
         if (CanMoveTo(direction))
@@ -77,7 +77,7 @@ public abstract class Character : Element
         }
         return CanMove;
     }
-    public override void ThingMoveToMe(Element element, Position direction)
+    public override void ThingMoveToMe(Element element, PositionInGrid direction)
     {
         MoveTo(direction);
     }

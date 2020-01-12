@@ -8,7 +8,7 @@ public class Box : Element
     {
         Type = ElementType.Box;
     }
-    public override bool ThingCanMoveToMe(Element element, Position direction)
+    public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         bool CanMove = false;
         if (CanMoveTo(direction))
@@ -18,7 +18,7 @@ public class Box : Element
         return CanMove;
     }
 
-    public override void ThingMoveToMe(Element element, Position direction)
+    public override void ThingMoveToMe(Element element, PositionInGrid direction)
     {
         MoveTo(direction);
     }

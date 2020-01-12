@@ -12,11 +12,11 @@ public class Bomb : Element
     {
         Type = ElementType.Bomb;
     }
-    public override bool ThingCanMoveToMe(Element element, Position direction)
+    public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         return CanMoveTo(direction);
     }
-    public override void ThingMoveToMe(Element element, Position direction)
+    public override void ThingMoveToMe(Element element, PositionInGrid direction)
     {
         MoveTo(direction);
         if(element is Character character)

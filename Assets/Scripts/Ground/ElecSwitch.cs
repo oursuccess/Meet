@@ -6,7 +6,7 @@ public class ElecSwitch : Ground
 {
     public delegate void ElementMoveToMeDel(ElecSwitch elecSwitch);
     public event ElementMoveToMeDel OnElementMoveToMe;
-    public bool Touched = false;
+    public bool Touched { get; protected set; } = false;
     public override bool ThingCanMoveToMe(Element element)
     {
         Touched = !Touched;

@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
     public const string BombScript = "BOMB";
     public const string KeyScript = "KEY";
     public const string ElecSwitchScript = "ELECSWITCH";
+    public const string ElecSpringScript = "ELECSPRING";
     public const string DoorScript = "DOOR";
     public const string ElecDoorScript = "ELECDOOR";
     public const string NormalCharacterScript = "NORMALCHARACTER";
@@ -30,6 +31,7 @@ public class BoardManager : MonoBehaviour
     private GameObject BombPrefab;
     private GameObject KeyPrefab;
     private GameObject ElecSwitchPrefab;
+    private GameObject ElecSpringPrefab;
     private GameObject DoorPrefab;
     private GameObject ElecDoorPrefab;
     private GameObject NormalCharacterPrefab;
@@ -48,6 +50,7 @@ public class BoardManager : MonoBehaviour
         BombPrefab = Resources.Load<GameObject>(PrefabPath + "/Bomb");
         KeyPrefab = Resources.Load<GameObject>(PrefabPath + "/Key");
         ElecSwitchPrefab = Resources.Load<GameObject>(PrefabPath + "/ElecSwitch");
+        ElecSpringPrefab = Resources.Load<GameObject>(PrefabPath + "/ElecSpring");
         DoorPrefab = Resources.Load<GameObject>(PrefabPath + "/Door");
         ElecDoorPrefab = Resources.Load<GameObject>(PrefabPath + "/ElecDoor");
         NormalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/NormalCharacter");
@@ -165,6 +168,11 @@ public class BoardManager : MonoBehaviour
                                     GroundPrefab = ElecSwitchPrefab;
                                 }
                                 break;
+                            case ElecSpringScript:
+                                {
+                                    GroundPrefab = ElecSpringPrefab;
+                                }
+                                break;
                             case DoorScript:
                                 {
                                     GroundPrefab = DoorPrefab;
@@ -206,6 +214,7 @@ public class BoardManager : MonoBehaviour
                             var GroundObject = Instantiate(GroundPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
                             var Ground = GroundObject.GetComponent<Ground>();
                             Ground.Board = this;
+                            Ground.SetPosition(new PositionInGrid(x, y));
                             Grid.Ground = Ground;
 
                             if(Ground is ElecDoor elecDoor)
@@ -218,7 +227,7 @@ public class BoardManager : MonoBehaviour
                             var ElementObject = Instantiate(ElementPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
                             var Element = ElementObject.GetComponent<Element>();
                             Element.Board = this;
-                            Element.SetPosition(new Element.Position(x, y));
+                            Element.SetPosition(new PositionInGrid(x, y));
                             Grid.Element = Element;
 
                             if(Element is Character character)
@@ -245,7 +254,7 @@ public class BoardManager : MonoBehaviour
         {
             var elementInTargetGrid = Grids[yTarget][xTarget].Element;
             var groundInTargetGrid = Grids[yTarget][xTarget].Ground;
-            if ((elementInTargetGrid == null || elementInTargetGrid.ThingCanMoveToMe(element, new Element.Position(xChange, yChange))) && (groundInTargetGrid == null || groundInTargetGrid.ThingCanMoveToMe(element)))
+            if ((elementInTargetGrid == null || elementInTargetGrid.ThingCanMoveToMe(element, new PositionInGrid(xChange, yChange))) && (groundInTargetGrid == null || groundInTargetGrid.ThingCanMoveToMe(element)))
             {
                 CanMove = true;
             }
@@ -257,10 +266,10 @@ public class BoardManager : MonoBehaviour
         int yBase = element.PositionInGrid.y, yTarget = yBase - yChange;
         int xBase = element.PositionInGrid.x, xTarget = xBase + xChange;
         var nextElement = Grids[yTarget][xTarget].Element;
-        if(nextElement != null) nextElement.ThingMoveToMe(element, new Element.Position(xChange, yChange));
+        if(nextElement != null) nextElement.ThingMoveToMe(element, new PositionInGrid(xChange, yChange));
         Grids[yTarget][xTarget].Element = element;
         Grids[yBase][xBase].Element = null;
-        element.SetPosition(new Element.Position(xTarget, yTarget));
+        element.SetPosition(new PositionInGrid(xTarget, yTarget));
     }
     public void CharacterApproachExit(Character character)
     {

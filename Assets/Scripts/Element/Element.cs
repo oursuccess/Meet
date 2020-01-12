@@ -15,34 +15,28 @@ public abstract class Element : MonoBehaviour
     public ElementType Type { get; protected set; }
     #endregion
     #region PositionInGrid
-    public class Position
-    {
-        public int x;
-        public int y;
-        public Position(int x, int y) { this.x = x; this.y = y; }
-    };
-    public Position PositionInGrid { get; protected set; }
-    public void SetPosition(Position position)
+    public PositionInGrid PositionInGrid { get; protected set; }
+    public void SetPosition(PositionInGrid position)
     {
         PositionInGrid = position;
     }
     #endregion
     #region MoveTo
-    public bool CanMoveTo(Position direction)
+    public bool CanMoveTo(PositionInGrid direction)
     {
         return Board.CanMoveTo(this, direction.x, direction.y);
     }
-    public void MoveTo(Position direction)
+    public void MoveTo(PositionInGrid direction)
     {
         Board.ElementMoveTo(this, direction.x, direction.y);
         OnMoving?.Invoke(this);
         transform.position += new Vector3(direction.x, direction.y);
     }
-    public virtual bool ThingCanMoveToMe(Element element, Position direction)
+    public virtual bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         return false;
     }
-    public abstract void ThingMoveToMe(Element element, Position direction);
+    public abstract void ThingMoveToMe(Element element, PositionInGrid direction);
     public delegate void MovingDel(Element element);
     public event MovingDel OnMoving;
     #endregion

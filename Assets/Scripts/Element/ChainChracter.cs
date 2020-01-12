@@ -30,7 +30,7 @@ public class ChainChracter : Character
     protected override void Move(int Horizontal, int Vertical)
     {
         var canMove = true;
-        var direction = new Position(Horizontal, Vertical);
+        var direction = new PositionInGrid(Horizontal, Vertical);
         foreach(var element in ChainedElements)
         {
             if (!element.CanMoveTo(direction)) canMove = false;
