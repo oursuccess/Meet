@@ -1,7 +1,7 @@
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall
-Wall,,,,Wall,,,Wall
-Wall,,,HorizontalCharacter,,,,Wall
-Wall,,NormalCharacter,ElecSwitch,,ElecDoor,Exit,Wall
-Wall,,,ChainCharacter,Box,,,Wall
+Wall,,,,,,,Wall
+Wall,,,HorizontalCharacter,CharacterDirectionSwitch,,,Wall
+Wall,,,,,,Exit,Wall
+Wall,,,,,,,Wall
 Wall,,,,VerticalCharacter,,,Wall
 Wall,Wall,Wall,Wall,Wall,Wall,Wall,Wall

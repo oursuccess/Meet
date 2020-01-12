@@ -10,9 +10,13 @@ public class Ground : MonoBehaviour
         Exit,
         Floor,
         Wall,
+        ElecDoor,
+        ElecSwitch,
+        Door,
     }
     public GroundType Type { get; protected set; }
     #endregion
+    public BoardManager Board;
     public virtual bool ThingCanMoveToMe(Element element)
     {
         return false;

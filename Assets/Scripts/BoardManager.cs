@@ -10,6 +10,7 @@ public class BoardManager : MonoBehaviour
     public const string FloorScript = "FLOOR";
     public const string ExitScript = "EXIT";
     public const string BoxScript = "BOX";
+    public const string BombScript = "BOMB";
     public const string KeyScript = "KEY";
     public const string ElecSwitchScript = "ELECSWITCH";
     public const string DoorScript = "DOOR";
@@ -18,6 +19,7 @@ public class BoardManager : MonoBehaviour
     public const string HorizontalCharacterScript = "HORIZONTALCHARACTER";
     public const string VerticalCharacterScript = "VERTICALCHARACTER";
     public const string ChainCharacterScript = "CHAINCHARACTER";
+    public const string CharacterDirectionSwitchScript = "CHARACTERDIRECTIONSWITCH";
     public const string NoGrid = "NOGRID";
     #endregion
     #region Prefab
@@ -25,6 +27,7 @@ public class BoardManager : MonoBehaviour
     private GameObject FloorPrefab;
     private GameObject ExitPrefab;
     private GameObject BoxPrefab;
+    private GameObject BombPrefab;
     private GameObject KeyPrefab;
     private GameObject ElecSwitchPrefab;
     private GameObject DoorPrefab;
@@ -33,6 +36,7 @@ public class BoardManager : MonoBehaviour
     private GameObject HorizontalCharacterPrefab;
     private GameObject VerticalCharacterPrefab;
     private GameObject ChainCharacterPrefab;
+    private GameObject CharacterDirectionSwitchPrefab;
     private GameObject GridPrefab;
     private void InitPrefabs()
     {
@@ -41,6 +45,7 @@ public class BoardManager : MonoBehaviour
         FloorPrefab = Resources.Load<GameObject>(PrefabPath + "/Floor");
         ExitPrefab = Resources.Load<GameObject>(PrefabPath + "/Exit");
         BoxPrefab = Resources.Load<GameObject>(PrefabPath + "/Box");
+        BombPrefab = Resources.Load<GameObject>(PrefabPath + "/Bomb");
         KeyPrefab = Resources.Load<GameObject>(PrefabPath + "/Key");
         ElecSwitchPrefab = Resources.Load<GameObject>(PrefabPath + "/ElecSwitch");
         DoorPrefab = Resources.Load<GameObject>(PrefabPath + "/Door");
@@ -49,6 +54,7 @@ public class BoardManager : MonoBehaviour
         HorizontalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/HorizontalCharacter");
         VerticalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/VerticalCharacter");
         ChainCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/ChainCharacter");
+        CharacterDirectionSwitchPrefab = Resources.Load<GameObject>(PrefabPath + "/CharacterDirectionSwitch");
         GridPrefab = Resources.Load<GameObject>(PrefabPath + "/Grid");
     }
  #endregion
@@ -114,7 +120,15 @@ public class BoardManager : MonoBehaviour
                     {
                         GameObject ElementPrefab = null;
                         GameObject GroundPrefab = null;
-                        switch (Scripts[y][x])
+                        var Script = Scripts[y][x];
+                        string ScriptValue = null;
+                        if (Script.Contains(":"))
+                        {
+                            var ScriptKeyValue = Script.Split(':');
+                            Script = ScriptKeyValue[0];
+                            ScriptValue = ScriptKeyValue[1];
+                        }
+                        switch (Script)
                         {
                             case FloorScript:
                                 {
@@ -134,6 +148,11 @@ public class BoardManager : MonoBehaviour
                             case BoxScript:
                                 {
                                     ElementPrefab = BoxPrefab;
+                                }
+                                break;
+                            case BombScript:
+                                {
+                                    ElementPrefab = BombPrefab;
                                 }
                                 break;
                             case KeyScript:
@@ -176,12 +195,23 @@ public class BoardManager : MonoBehaviour
                                     ElementPrefab = ChainCharacterPrefab;
                                 }
                                 break;
+                            case CharacterDirectionSwitchScript:
+                                {
+                                    GroundPrefab = CharacterDirectionSwitchPrefab;
+                                }
+                                break;
                         }
                         if(GroundPrefab != null)
                         {
                             var GroundObject = Instantiate(GroundPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
                             var Ground = GroundObject.GetComponent<Ground>();
+                            Ground.Board = this;
                             Grid.Ground = Ground;
+
+                            if(Ground is ElecDoor elecDoor)
+                            {
+                                elecDoor.InitElecSwitches(ScriptValue);
+                            }
                         }
                         if(ElementPrefab != null)
                         {
@@ -256,5 +286,22 @@ public class BoardManager : MonoBehaviour
             element = Grids[yPos][xPos].Element;
         }
         return element;
+    }
+    public Ground GetGroundOfPosition(int xPos, int yPos)
+    {
+        Ground ground = null;
+        if(yPos < 0 || yPos >= Grids.Count || xPos < 0 || xPos >= Grids[yPos].Count || Grids[yPos][xPos] == null)
+        {
+
+        }
+        else
+        {
+            ground = Grids[yPos][xPos].Ground;
+        }
+        return ground;
+    }
+    public bool IsClosedTo(Element element1, Element element2)
+    {
+        return Mathf.Abs(element1.PositionInGrid.y - element2.PositionInGrid.y) + Mathf.Abs(element1.PositionInGrid.x - element2.PositionInGrid.x) == 1;
     }
 }

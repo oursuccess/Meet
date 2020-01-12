@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HorizontalCharacter : Character
+public class HorizontalCharacter : UnidirectionCharacter 
 {
-    protected override bool IfGetInput()
+    protected override void Start()
     {
-        bool GetInput = false;
-        var x = (int)Input.GetAxisRaw("Horizontal");
-        if(x != 0)
-        {
-            Move(x, 0);
-            GetInput = true;
-        }
-        return GetInput;
+        CanGetHorizontalInput = true;
+        base.Start();
     }
 }

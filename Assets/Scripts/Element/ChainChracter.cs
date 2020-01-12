@@ -7,48 +7,25 @@ public class ChainChracter : Character
     private List<Element> ChainedElements;
     private List<Element> CalculatedElements;
     private bool chaining = false;
-    private bool CanGetHorizontalInput = false;
-    private bool CanGetVerticalInput = false;
     protected override bool IfGetInput()
     {
         bool GetInput = false;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("space");
             if (!chaining)
             {
-                Debug.Log("make close");
                 ChainAllClosedElements();
-                Debug.Log("maked");
                 chaining = true;
             }
             else
             {
-                Debug.Log("unmake close");
                 UnchainClosedElements();
                 chaining = false;
             }
             GetInput = true;
         }
-        if (CanGetHorizontalInput)
-        {
-            var x = (int)Input.GetAxisRaw("Horizontal");
-            if (x != 0)
-            {
-                Move(x, 0);
-                GetInput = true;
-            }
-        }
-        if(CanGetVerticalInput)
-        {
-            var y = (int)Input.GetAxisRaw("Vertical");
-            if(y != 0)
-            {
-                Move(0, y);
-                GetInput = true;
-            }
-        }
-        return GetInput;
+        var BaseGetInput = base.IfGetInput();
+        return GetInput || BaseGetInput;
     }
     protected override void Move(int Horizontal, int Vertical)
     {

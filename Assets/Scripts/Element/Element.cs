@@ -8,7 +8,9 @@ public abstract class Element : MonoBehaviour
     public enum ElementType
     {
         Box,
+        Bomb,
         Character,
+        Key,
     }
     public ElementType Type { get; protected set; }
     #endregion
@@ -33,6 +35,7 @@ public abstract class Element : MonoBehaviour
     public void MoveTo(Position direction)
     {
         Board.ElementMoveTo(this, direction.x, direction.y);
+        OnMoving?.Invoke(this);
         transform.position += new Vector3(direction.x, direction.y);
     }
     public virtual bool ThingCanMoveToMe(Element element, Position direction)
@@ -40,6 +43,8 @@ public abstract class Element : MonoBehaviour
         return false;
     }
     public abstract void ThingMoveToMe(Element element, Position direction);
+    public delegate void MovingDel(Element element);
+    public event MovingDel OnMoving;
     #endregion
     #region Grid
     public BoardManager Board;
