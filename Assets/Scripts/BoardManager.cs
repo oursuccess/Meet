@@ -11,7 +11,9 @@ public class BoardManager : MonoBehaviour
     public const string ExitScript = "EXIT";
     public const string BoxScript = "BOX";
     public const string KeyScript = "KEY";
+    public const string ElecSwitchScript = "ELECSWITCH";
     public const string DoorScript = "DOOR";
+    public const string ElecDoorScript = "ELECDOOR";
     public const string NormalCharacterScript = "NORMALCHARACTER";
     public const string HorizontalCharacterScript = "HORIZONTALCHARACTER";
     public const string VerticalCharacterScript = "VERTICALCHARACTER";
@@ -24,7 +26,9 @@ public class BoardManager : MonoBehaviour
     private GameObject ExitPrefab;
     private GameObject BoxPrefab;
     private GameObject KeyPrefab;
+    private GameObject ElecSwitchPrefab;
     private GameObject DoorPrefab;
+    private GameObject ElecDoorPrefab;
     private GameObject NormalCharacterPrefab;
     private GameObject HorizontalCharacterPrefab;
     private GameObject VerticalCharacterPrefab;
@@ -38,7 +42,9 @@ public class BoardManager : MonoBehaviour
         ExitPrefab = Resources.Load<GameObject>(PrefabPath + "/Exit");
         BoxPrefab = Resources.Load<GameObject>(PrefabPath + "/Box");
         KeyPrefab = Resources.Load<GameObject>(PrefabPath + "/Key");
+        ElecSwitchPrefab = Resources.Load<GameObject>(PrefabPath + "/ElecSwitch");
         DoorPrefab = Resources.Load<GameObject>(PrefabPath + "/Door");
+        ElecDoorPrefab = Resources.Load<GameObject>(PrefabPath + "/ElecDoor");
         NormalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/NormalCharacter");
         HorizontalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/HorizontalCharacter");
         VerticalCharacterPrefab = Resources.Load<GameObject>(PrefabPath + "/VerticalCharacter");
@@ -135,9 +141,19 @@ public class BoardManager : MonoBehaviour
                                     ElementPrefab = KeyPrefab;
                                 }
                                 break;
+                            case ElecSwitchScript:
+                                {
+                                    GroundPrefab = ElecSwitchPrefab;
+                                }
+                                break;
                             case DoorScript:
                                 {
                                     GroundPrefab = DoorPrefab;
+                                }
+                                break;
+                            case ElecDoorScript:
+                                {
+                                    GroundPrefab = ElecDoorPrefab;
                                 }
                                 break;
                             case NormalCharacterScript:

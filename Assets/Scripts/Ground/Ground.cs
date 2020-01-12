@@ -17,5 +17,4 @@ public class Ground : MonoBehaviour
     {
         return false;
     }
-
 }
