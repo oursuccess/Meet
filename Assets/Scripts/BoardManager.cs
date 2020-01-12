@@ -210,7 +210,7 @@ public class BoardManager : MonoBehaviour
 
                             if(Ground is ElecDoor elecDoor)
                             {
-                                elecDoor.InitElecSwitches(ScriptValue);
+                                elecDoor.InitElecSwitchScript(ScriptValue);
                             }
                         }
                         if(ElementPrefab != null)
@@ -232,7 +232,10 @@ public class BoardManager : MonoBehaviour
             }
             Grids.Add(new List<Grid>(GridCol));
         }
+        OnBoardInitFinished?.Invoke();
     }
+    public delegate void BoardInitFinishDel();
+    public event BoardInitFinishDel OnBoardInitFinished;
     public bool CanMoveTo(Element element, int xChange, int yChange)
     {
         bool CanMove = false;

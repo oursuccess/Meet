@@ -8,10 +8,17 @@ public class ElecDoor : Ground
     private bool DoorOpened = false;
     public List<ElecSwitch> ElecSwitches = new List<ElecSwitch>();
     public bool AllSwitchTouched = false;
-    public void InitElecSwitches(string ElecSwitchScript)
+    private string ElecSwitchScript;
+    public void InitElecSwitchScript(string Script)
     {
+        ElecSwitchScript = Script;
+        Board.OnBoardInitFinished += InitElecSwitches;
+    }
+    private void InitElecSwitches()
+    {
+        Board.OnBoardInitFinished -= InitElecSwitches;
         if (string.IsNullOrEmpty(ElecSwitchScript)) return;
-        var ElecSwitchScripts = ElecSwitchScript.Split(',');
+        var ElecSwitchScripts = ElecSwitchScript.Split('+');
         Regex regex = new Regex(@"\d");
         foreach(var Script in ElecSwitchScripts)
         {
@@ -24,9 +31,10 @@ public class ElecDoor : Ground
             {
                 x = xScript[0] - 'A';
             }
-            var elecGround = Board.GetGroundOfPosition(x, y);
+            var elecGround = Board.GetGroundOfPosition(x, y-1);
             if(elecGround != null && elecGround is ElecSwitch elecSwitch)
             {
+                elecSwitch.OnElementMoveToMe += ElecSwitchTouched;
                 ElecSwitches.Add(elecSwitch);
             }
         }
@@ -57,12 +65,15 @@ public class ElecDoor : Ground
     }
     private void DoorOpen()
     {
+        foreach(var es in ElecSwitches)
+        {
+            es.OnElementMoveToMe -= ElecSwitchTouched;
+        }
+        Destroy(gameObject);
         DoorOpened = true;
-        Debug.Log("Door Opened");
     }
     private void DoorClose()
     {
         DoorOpened = false;
-        Debug.Log("Door Closed");
     }
 }
