@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     #endregion
     #region Manager
     private LevelManager LevelManager;
-    private InputManager InputManager;
     private UIManager UIManager;
     #endregion
     #region Init
@@ -31,7 +30,6 @@ public class GameManager : MonoBehaviour
     }
     private void InitVariables()
     {
-        InputManager = gameObject.AddComponent<InputManager>();
         LevelManager = gameObject.AddComponent<LevelManager>();
         UIManager = gameObject.AddComponent<UIManager>();
     }

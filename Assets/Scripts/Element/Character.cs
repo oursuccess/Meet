@@ -10,6 +10,11 @@ public abstract class Character : Element
     public bool CanGetHorizontalInput { get; protected set; } = false;
 
     public bool CanGetVerticalInput { get; protected set; } = false;
+    #region MobileInput
+#if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
+    private Vector2 TouchOrigin = -Vector2.one;
+#endif
+    #endregion
     protected virtual void Start()
     {
         Type = ElementType.Character;
@@ -66,6 +71,41 @@ public abstract class Character : Element
                 GetInput = true;
             }
         }
+#if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
+        if (Input.touchCount > 0)
+        {
+            Touch PlayerTouch = Input.touches[0];
+            if (PlayerTouch.phase == TouchPhase.Began)
+            {
+                TouchOrigin = PlayerTouch.position;
+            }
+            else if (PlayerTouch.phase == TouchPhase.Ended && TouchOrigin.x >= 0)
+            {
+                Vector2 TouchEnd = PlayerTouch.position;
+                float x = TouchEnd.x - TouchOrigin.x;
+                float y = TouchEnd.y - TouchOrigin.y;
+                TouchOrigin.x = -1;
+                Debug.Log("x: " + x + " y: " + y);
+
+                if (Mathf.Abs(x) > Mathf.Abs(y))
+                {
+                    if (CanGetHorizontalInput)
+                    {
+                        var horizontal = x > 0 ? 1 : -1;
+                        Move(horizontal, 0);
+                    }
+                }
+                else
+                {
+                    if (CanGetVerticalInput)
+                    {
+                        var vertical = y > 0 ? 1 : -1;
+                        Move(0, vertical);
+                    }
+                }
+            }
+        }
+#endif
         return GetInput;
     }
     public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)

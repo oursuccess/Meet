@@ -2,7 +2,7 @@ Wall,Wall,Wall,Wall,,,,
 Wall,,,Wall,,,,
 Wall,,,Wall,Wall,Wall,Wall,Wall
 Wall,Exit,,BOX,HorizontalCharacter,,,Wall
-Wall,BOX,,BOX,VerticalCharacter,,,Wall
+Wall,,,BOX,VerticalCharacter,,,Wall
 Wall,,,Wall,Wall,Wall,Wall,Wall
 Wall,,,,Wall,,,
 Wall,,,,Wall,,,
