@@ -22,6 +22,7 @@ public class BoardManager : MonoBehaviour
     public const string ChainCharacterScript = "CHAINCHARACTER";
     public const string CharacterDirectionSwitchScript = "CHARACTERDIRECTIONSWITCH";
     public const string NoGrid = "NOGRID";
+    public const string DontHandleThisGrid = "DONTHANDLETHISGRID";
     #endregion
     #region Prefab
     private GameObject WallPrefab;
@@ -119,7 +120,7 @@ public class BoardManager : MonoBehaviour
                 {
                     var GridObject = Instantiate(GridPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
                     Grid = GridObject.GetComponent<Grid>();
-                    if (!string.IsNullOrEmpty(Scripts[y][x]))
+                    if (Scripts[y][x] != DontHandleThisGrid)
                     {
                         GameObject ElementPrefab = null;
                         GameObject GroundPrefab = null;

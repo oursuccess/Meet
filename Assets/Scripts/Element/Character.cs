@@ -15,9 +15,11 @@ public abstract class Character : Element
     private Vector2 TouchOrigin = -Vector2.one;
 #endif
     #endregion
+    protected Animator Animator;
     protected virtual void Start()
     {
         Type = ElementType.Character;
+        Animator = gameObject.GetComponent<Animator>();
 
         GameManager.Instance.OnLevelAccomplish += DisableInput;
     }
@@ -35,6 +37,11 @@ public abstract class Character : Element
         {
             MoveTo(new PositionInGrid(Horizontal, Vertical));
         }
+    }
+    public override void MoveTo(PositionInGrid direction)
+    {
+        Animator.SetTrigger("Move");
+        base.MoveTo(direction);
     }
     void Update()
     {
@@ -85,7 +92,6 @@ public abstract class Character : Element
                 float x = TouchEnd.x - TouchOrigin.x;
                 float y = TouchEnd.y - TouchOrigin.y;
                 TouchOrigin.x = -1;
-                Debug.Log("x: " + x + " y: " + y);
 
                 if (Mathf.Abs(x) > Mathf.Abs(y))
                 {

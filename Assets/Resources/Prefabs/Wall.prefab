@@ -77,7 +77,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &114216713336060642
@@ -93,3 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Board: {fileID: 0}
+  sprites:
+  - {fileID: 21300000, guid: 797727c686776a24abc026c2e563fe14, type: 3}
+  - {fileID: 21300000, guid: ab4f6a0ffc9387b4a84d8223651beaa5, type: 3}
+  - {fileID: 21300000, guid: 70bd346a3209191498eefa9eb7dbffc2, type: 3}

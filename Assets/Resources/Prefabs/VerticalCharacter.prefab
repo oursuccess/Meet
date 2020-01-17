@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4671804451663228928}
   - component: {fileID: 4671804451663228929}
   - component: {fileID: 4671804451663228958}
+  - component: {fileID: 7957121122929731039}
   m_Layer: 0
   m_Name: VerticalCharacter
   m_TagString: Untagged
@@ -67,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1251273485
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300010, guid: 770ed10f29ca281429f88321f759931c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -93,3 +94,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Board: {fileID: 0}
+--- !u!95 &7957121122929731039
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671804451663228931}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: fb756ecaa6da91546bab5c75aa113587, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

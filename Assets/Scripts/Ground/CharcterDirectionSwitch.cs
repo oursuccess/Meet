@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharcterDirectionSwitch : Ground
+public class CharcterDirectionSwitch : SwitchBase
 {
     public override bool ThingCanMoveToMe(Element element)
     {

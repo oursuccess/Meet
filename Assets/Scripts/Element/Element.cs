@@ -26,7 +26,7 @@ public abstract class Element : MonoBehaviour
     {
         return Board.CanMoveTo(this, direction.x, direction.y);
     }
-    public void MoveTo(PositionInGrid direction)
+    public virtual void MoveTo(PositionInGrid direction)
     {
         Board.ElementMoveTo(this, direction.x, direction.y);
         OnMoving?.Invoke(this);

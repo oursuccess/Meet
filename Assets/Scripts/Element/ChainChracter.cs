@@ -7,25 +7,56 @@ public class ChainChracter : Character
     private List<Element> ChainedElements;
     private List<Element> CalculatedElements;
     private bool chaining = false;
+
+    private float LastTouchT = 0.1f, TouchDelay = 0.1f;
     protected override bool IfGetInput()
     {
         bool GetInput = false;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!chaining)
+            SwitchChain();
+            GetInput = true;
+        }
+#if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
+        if (Input.touchCount > 0)
+        {
+            Touch PlayerTouch = Input.touches[0];
+            if(PlayerTouch.phase == TouchPhase.Began)
             {
-                ChainAllClosedElements();
-                chaining = true;
+                if(LastTouchT != 0f)
+                {
+                    LastTouchT = 0f;
+                }
+                else
+                {
+                    SwitchChain();
+                }
             }
             else
             {
-                UnchainClosedElements();
-                chaining = false;
+                LastTouchT += Time.deltaTime;
             }
-            GetInput = true;
+            if(PlayerTouch.phase == TouchPhase.Ended && LastTouchT <= TouchDelay)
+            {
+                LastTouchT = 0f;
+            }
         }
+#endif
         var BaseGetInput = base.IfGetInput();
         return GetInput || BaseGetInput;
+    }
+    private void SwitchChain()
+    {
+        if (!chaining)
+        {
+            ChainAllClosedElements();
+            chaining = true;
+        }
+        else
+        {
+                UnchainClosedElements();
+                chaining = false;
+        }
     }
     protected override void Move(int Horizontal, int Vertical)
     {

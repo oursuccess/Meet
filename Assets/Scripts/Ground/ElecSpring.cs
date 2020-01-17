@@ -13,11 +13,11 @@ public class ElecSpring : ElecSwitch
     {
         if(element.PositionInGrid.x == PositionInGrid.x && element.PositionInGrid.y == PositionInGrid.y)
         {
-            Touched = true;
+            ChangeTouchState(true);
         }
         else
         {
-            Touched = false;
+            ChangeTouchState(false);
             element.OnMoving -= DetermineTouching;
         }
     }
