@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
-public class ElecDoor : Ground
+public class ElecDoor : DoorBase
 {
+    #region Door
     private bool DoorOpened = false;
     public List<ElecSwitch> ElecSwitches = new List<ElecSwitch>();
     public bool AllSwitchTouched = false;
@@ -39,11 +40,6 @@ public class ElecDoor : Ground
             }
         }
     }
-    public override bool ThingCanMoveToMe(Element element)
-    {
-        if (!DoorOpened) return false;
-        return true;
-    }
     public void ElecSwitchTouched(ElecSwitch elecSwitch)
     {
         AllSwitchTouched = true;
@@ -63,8 +59,10 @@ public class ElecDoor : Ground
             DoorClose();
         }
     }
+    #region Open
     private void DoorOpen()
     {
+        PlayDoorOpenAudio();
         foreach(var es in ElecSwitches)
         {
             es.OnElementMoveToMe -= ElecSwitchTouched;
@@ -76,4 +74,17 @@ public class ElecDoor : Ground
     {
         DoorOpened = false;
     }
+    #endregion
+    #endregion
+    #region Move
+    public override bool ThingCanMoveToMe(Element element)
+    {
+        if (!DoorOpened)
+        {
+            PlayCantMoveAudio();
+            return false;
+        }
+        return true;
+    }
+    #endregion
 }

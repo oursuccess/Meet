@@ -214,7 +214,7 @@ public class BoardManager : MonoBehaviour
                         {
                             var GroundObject = Instantiate(GroundPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
                             var Ground = GroundObject.GetComponent<Ground>();
-                            Ground.Board = this;
+                            Ground.InitBoard(this);
                             Ground.SetPosition(new PositionInGrid(x, y));
                             Grid.Ground = Ground;
 
@@ -227,7 +227,7 @@ public class BoardManager : MonoBehaviour
                         {
                             var ElementObject = Instantiate(ElementPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
                             var Element = ElementObject.GetComponent<Element>();
-                            Element.Board = this;
+                            Element.InitBoard(this);
                             Element.SetPosition(new PositionInGrid(x, y));
                             Grid.Element = Element;
 

@@ -5,6 +5,10 @@ using UnityEngine;
 
 public abstract class Character : Element
 {
+    #region Cinema
+    protected Animator Animator;
+    #endregion
+    #region Input
     protected float MoveDelay = .3f, lastMoveT = 0f;
     protected bool canGetInput = true;
     public bool CanGetHorizontalInput { get; protected set; } = false;
@@ -15,13 +19,13 @@ public abstract class Character : Element
     private Vector2 TouchOrigin = -Vector2.one;
 #endif
     #endregion
-    protected Animator Animator;
-    protected virtual void Start()
+    protected override void Start()
     {
         Type = ElementType.Character;
         Animator = gameObject.GetComponent<Animator>();
 
         GameManager.Instance.OnLevelAccomplish += DisableInput;
+        base.Start();
     }
     public void DisableInput()
     {
@@ -30,32 +34,6 @@ public abstract class Character : Element
     public void EnableInput()
     {
         canGetInput = true;
-    }
-    protected virtual void Move(int Horizontal, int Vertical)
-    {
-        if(CanMoveTo(new PositionInGrid(Horizontal, Vertical)))
-        {
-            MoveTo(new PositionInGrid(Horizontal, Vertical));
-        }
-    }
-    public override void MoveTo(PositionInGrid direction)
-    {
-        Animator.SetTrigger("Move");
-        base.MoveTo(direction);
-    }
-    void Update()
-    {
-        if(lastMoveT < MoveDelay)
-        {
-            lastMoveT += Time.deltaTime;
-        }
-        else
-        {
-            if (canGetInput && IfGetInput())
-            {
-                lastMoveT = 0f;
-            }
-        }
     }
     protected virtual bool IfGetInput()
     {
@@ -114,6 +92,20 @@ public abstract class Character : Element
 #endif
         return GetInput;
     }
+    #endregion
+    #region Move
+    protected virtual void Move(int Horizontal, int Vertical)
+    {
+        if(CanMoveTo(new PositionInGrid(Horizontal, Vertical)))
+        {
+            MoveTo(new PositionInGrid(Horizontal, Vertical));
+        }
+    }
+    public override void MoveTo(PositionInGrid direction)
+    {
+        Animator.SetTrigger("Move");
+        base.MoveTo(direction);
+    }
     public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         bool CanMove = false;
@@ -130,5 +122,20 @@ public abstract class Character : Element
     public virtual void ApproachExit()
     {
         Board.CharacterApproachExit(this);
+    }
+    #endregion
+    void Update()
+    {
+        if(lastMoveT < MoveDelay)
+        {
+            lastMoveT += Time.deltaTime;
+        }
+        else
+        {
+            if (canGetInput && IfGetInput())
+            {
+                lastMoveT = 0f;
+            }
+        }
     }
 }

@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5b9fef2b3c5314c89fdeb80aee5a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Board: {fileID: 0}
+  DoorOpenAudio: {fileID: 8300000, guid: 4224800e6df16ac479b6ae618eea71e1, type: 3}
+  CantMoveAudio: {fileID: 8300000, guid: 7d9e5042a09d38943be1f144a0f47473, type: 3}
   ElecSwitches: []
   AllSwitchTouched: 0

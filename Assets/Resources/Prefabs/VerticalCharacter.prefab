@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f148cecd1b4e34b9c1b9c1bfd4fd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Board: {fileID: 0}
+  MoveSound: {fileID: 8300000, guid: be0456a93634aa8479739af9deb9a2fc, type: 3}
 --- !u!95 &7957121122929731039
 Animator:
   serializedVersion: 3

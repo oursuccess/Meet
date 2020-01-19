@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Box : Element 
 {
-    void Start()
+    protected override void Start()
     {
         Type = ElementType.Box;
+        base.Start();
     }
     public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {

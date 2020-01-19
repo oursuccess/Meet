@@ -4,6 +4,12 @@ using UnityEngine;
 
 public abstract class Element : MonoBehaviour
 {
+    #region Audio
+    [SerializeField]
+    [Tooltip("移动音效")]
+    protected AudioClip MoveSound;
+    protected AudioSource AudioSource;
+    #endregion
     #region Type
     public enum ElementType
     {
@@ -21,6 +27,12 @@ public abstract class Element : MonoBehaviour
         PositionInGrid = position;
     }
     #endregion
+    #region Start
+    protected virtual void Start()
+    {
+        AudioSource = gameObject.AddComponent<AudioSource>();
+    }
+    #endregion
     #region MoveTo
     public bool CanMoveTo(PositionInGrid direction)
     {
@@ -29,6 +41,11 @@ public abstract class Element : MonoBehaviour
     public virtual void MoveTo(PositionInGrid direction)
     {
         Board.ElementMoveTo(this, direction.x, direction.y);
+        if (AudioSource && MoveSound)
+        {
+            AudioSource.clip = MoveSound;
+            AudioSource.Play();
+        }
         OnMoving?.Invoke(this);
         transform.position += new Vector3(direction.x, direction.y);
     }
@@ -40,8 +57,12 @@ public abstract class Element : MonoBehaviour
     public delegate void MovingDel(Element element);
     public event MovingDel OnMoving;
     #endregion
-    #region Grid
-    public BoardManager Board;
+    #region Board
+    protected BoardManager Board;
+    public void InitBoard(BoardManager boardManager)
+    {
+        Board = boardManager;
+    }
     #endregion
     #region Chain
     public bool IsChained { get; protected set; } = false;

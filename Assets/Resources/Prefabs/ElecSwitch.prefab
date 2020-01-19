@@ -92,6 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff923132fda5e4a972f0cc16650d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Board: {fileID: 0}
   OpenSprite: {fileID: 21300000, guid: e316e85fa81e9724b8196c9f4c5b4018, type: 3}
   CloseSprite: {fileID: 21300000, guid: 938b08b23ab865e4f9b54996a8ad6f10, type: 3}
+  Switched: {fileID: 8300000, guid: 0ceb8d2d0b2c7c5418ae401429d2f773, type: 3}

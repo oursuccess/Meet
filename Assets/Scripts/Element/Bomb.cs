@@ -8,9 +8,10 @@ public class Bomb : Element
     private Character character;
     private int BombSteps = 1;
     private int CurrSteps = 0;
-    void Start()
+    protected override void Start()
     {
         Type = ElementType.Bomb;
+        base.Start();
     }
     public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {

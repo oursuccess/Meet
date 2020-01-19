@@ -16,17 +16,27 @@ public class Ground : MonoBehaviour
     }
     public GroundType Type { get; protected set; }
     #endregion
+    #region Start
+    protected virtual void Start()
+    {
+    }
+    #endregion
     #region Position
     public PositionInGrid PositionInGrid { get; protected set; }
     public void SetPosition(PositionInGrid position)
     {
         PositionInGrid = position;
     }
-
-    #endregion
-    public BoardManager Board;
     public virtual bool ThingCanMoveToMe(Element element)
     {
         return false;
     }
+    #endregion
+    #region Board
+    protected BoardManager Board;
+    public void InitBoard(BoardManager boardManager)
+    {
+        Board = boardManager;
+    }
+    #endregion
 }

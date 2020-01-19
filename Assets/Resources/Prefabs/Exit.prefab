@@ -92,4 +92,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51fef8bc676d3c48ab2ebd832df687f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Board: {fileID: 0}
+  ExitAudio: {fileID: 8300000, guid: a9cfed39f755eff46885a3fd519f2d85, type: 3}

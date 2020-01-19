@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Key : Element
 {
+    protected override void Start()
+    {
+        Type = ElementType.Key;
+        base.Start();
+    }
     public override bool ThingCanMoveToMe(Element element, PositionInGrid direction)
     {
         if(element is Character character)

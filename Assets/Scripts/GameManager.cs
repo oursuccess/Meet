@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     #region Manager
     private LevelManager LevelManager;
     private UIManager UIManager;
+    private AudioManager AudioManager;
     #endregion
     #region Init
     void Awake()
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         LevelManager = gameObject.AddComponent<LevelManager>();
         UIManager = gameObject.AddComponent<UIManager>();
+        AudioManager = gameObject.AddComponent<AudioManager>();
     }
     #endregion
     #region Level
@@ -78,5 +80,7 @@ public class GameManager : MonoBehaviour
     #region Screen
     public static float ScreenHeight { get { return Screen.height; } }
     public static float ScreenWidth { get { return Screen.width; } }
+    #endregion
+    #region Audio
     #endregion
 }
