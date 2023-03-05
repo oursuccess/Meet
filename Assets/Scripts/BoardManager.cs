@@ -113,12 +113,16 @@ public class BoardManager : MonoBehaviour
         {
             var ColCount = Scripts[y].Count;
             Grid[] GridCol = new Grid[ColCount];
+            var gridParent = new GameObject("Grid").transform;
+            var groundParent = new GameObject("Ground").transform;
+            var elementParent = new GameObject("Element").transform;
+
             for(var x = 0; x != ColCount; ++x)
             {
                 Grid Grid = null;
                 if(Scripts[y][x] != NoGrid)
                 {
-                    var GridObject = Instantiate(GridPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
+                    var GridObject = Instantiate(GridPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity, gridParent);
                     Grid = GridObject.GetComponent<Grid>();
                     if (Scripts[y][x] != DontHandleThisGrid)
                     {
@@ -212,7 +216,7 @@ public class BoardManager : MonoBehaviour
                         }
                         if(GroundPrefab != null)
                         {
-                            var GroundObject = Instantiate(GroundPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
+                            var GroundObject = Instantiate(GroundPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity, groundParent);
                             var Ground = GroundObject.GetComponent<Ground>();
                             Ground.InitBoard(this);
                             Ground.SetPosition(new PositionInGrid(x, y));
@@ -225,7 +229,7 @@ public class BoardManager : MonoBehaviour
                         }
                         if(ElementPrefab != null)
                         {
-                            var ElementObject = Instantiate(ElementPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity);
+                            var ElementObject = Instantiate(ElementPrefab, new Vector3(xBegin + x, yBegin - y), Quaternion.identity, elementParent);
                             var Element = ElementObject.GetComponent<Element>();
                             Element.InitBoard(this);
                             Element.SetPosition(new PositionInGrid(x, y));
